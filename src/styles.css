@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+/* @import 'semantic-ui-css/semantic.css'; */
+
+@import 'assets/bootstrap.css';
+
+.bg-primary {
+  background-color: rgba(12,16,28,1) !important;
+}
+
+.container {
+  max-width: 95%;
+}
+
+body {
+  padding-top: 120px;
+  background-color: rgba(27,30,40);
+  background-image: 'assets/pictures/logo.png';
+  background-repeat: repeat;
+}
