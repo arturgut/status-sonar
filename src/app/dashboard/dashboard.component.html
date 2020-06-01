@@ -1,13 +1,12 @@
 
 <div class="container">
-  <h3><b>URL's</b></h3>
+  <app-ngx-chart></app-ngx-chart>
   <table class="table table-hover">
     <thead>
       <tr>
         <th scope="col">URL</th>
         <th scope="col">STATUS</th>
         <th scope="col">LATEST CHECK</th>
-        <th scope="col">LAST 24H</th>
         <th scope="col">MANAGE</th>
       </tr>
     </thead>
@@ -22,38 +21,13 @@
         <td>
           <h4><span class="badge badge-success">Latency:{{ item.durationInMs }}ms</span></h4>
         </td>
-        <td>
-          Chart goes here 
-        </td>
         <td >
-          <button type="button" class="btn btn-primary btn-lg">Refresh</button>
+          <button type="button" class="btn btn-primary btn-lg"  (click)="onClick()"> Refresh </button>
+          <button type="button" class="btn btn-primary btn-lg"  (click)="onClick()"> Show/Hide </button>
         </td>
-
-        <!-- <td>
-          <h4><span class="badge badge-primary">The Guardian - https://www.theguardian.com</span></h4>
-        </td>
-        <td>
-          <svg class="bi bi-arrow-down-circle-fill" width="4em" height="4em" viewBox="0 0 16 16" fill="#E74C3C" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 5a.5.5 0 0 0-1 0v4.793L5.354 7.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 9.793V5z"/>
-          </svg>
-        </td>
-        <td>
-          <h5><span class="badge badge-danger">HTTP Status: 501</span></h5>
-          <h5><span class="badge badge-warning">Latency: 501ms</span></h5>
-        </td>
-        <td>
-          <img width="250px" src="assets/pictures/ngx_chart_2.png"/>
-        </td>
-        <td>
-          <button type="button" class="btn btn-primary btn-lg">Refresh</button>
-        </td> -->
       </tr>
       
     </tbody>
   </table>
-  <!-- <div class="container">
-    Debug:
-    {{ responseObject }}
-  </div> -->
-
+ 
 </div>

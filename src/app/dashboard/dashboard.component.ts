@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiResponseService } from '../api-response.service';
+import { NgxChartComponent } from '../ngx-chart/ngx-chart.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,29 +9,8 @@ import { ApiResponseService } from '../api-response.service';
 })
 export class DashboardComponent implements OnInit {
 
-
-     public responseArray: any;
-//   public responseObject = [
-//     {
-//        "url": "http://bbc.com",
-//        "responseCode": 200,
-//        "durationInMs": 232
-//     },
-//     {
-//        "url": "http://dell.com",
-//        "responseCode": 200,
-//        "durationInMs": 434
-//     },
-//     {
-//        "url": "http://google.com",
-//        "responseCode": 200,
-//        "durationInMs": 232
-//     }
-//  ];
-  public url: string;
-  public responseCode: number;
-  public durationInMs: number;
-  
+  public responseArray: any;
+ 
   constructor(private urlfetchlist: ApiResponseService) {
     this.fetchUrls()
   }
@@ -43,11 +23,6 @@ export class DashboardComponent implements OnInit {
     this.urlfetchlist.getList().subscribe((response) => {
       console.log(response);
       this.responseArray = response;
-      // console.log(this.responseObject);
-      // this.responseCode = response.site.responseCode; 
-      // this.durationInMs = response.site.durationInMs;
-      // this.responseCode = response.site.responseCode;
-      // console.log(response.site.url);
     });
   }
 

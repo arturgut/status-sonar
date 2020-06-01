@@ -8,6 +8,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { AboutComponent } from './about/about.component';
 import { FooterComponent } from './footer/footer.component';
+import { NgxChartComponent } from './ngx-chart/ngx-chart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -15,12 +19,15 @@ import { FooterComponent } from './footer/footer.component';
     DashboardComponent,
     NavigationComponent,
     AboutComponent,
-    FooterComponent
+    FooterComponent,
+    NgxChartComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

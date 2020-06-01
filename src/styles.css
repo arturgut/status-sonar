@@ -13,7 +13,24 @@
 
 body {
   padding-top: 120px;
-  background-color: rgba(27,30,40);
+  background-color: #04111c;
   background-image: 'assets/pictures/logo.png';
   background-repeat: repeat;
+}
+
+.card-header {
+  background-color: #183045;
+}
+
+.card {
+  background-color: #091826;
+
+}
+
+.ngx-charts text {
+  fill: #a0aabe;
+}
+
+.chart-container {
+  padding-top: 3em;
 }

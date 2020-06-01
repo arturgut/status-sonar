@@ -1,0 +1,28 @@
+<div class="card mb-3">
+  <h3 class="card-header">URL's Latency last 24h </h3>
+  <div class="card-body">
+    <h5 class="card-title">Request duration </h5>
+    <h6 class="card-subtitle text-muted">Value showed in miliseconds</h6>
+      <div class="chart-container">
+        <ngx-charts-line-chart
+        [view]="view"
+        [scheme]="colorScheme"
+        [legend]="legend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxis]="xAxis"
+        [yAxis]="yAxis"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [timeline]="timeline"
+        [results]="multi"
+        (select)="onSelect($event)"
+        (activate)="onActivate($event)"
+        (deactivate)="onDeactivate($event)"
+        >
+      </ngx-charts-line-chart> 
+    </div>
+  </div>
+</div>
+
+
