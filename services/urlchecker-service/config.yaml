@@ -1,0 +1,13 @@
+loglevel: debug
+server: 
+  port: 8091
+client: 
+  skipSSL: true # This is currently broken
+  timeout: 30 # http client timeout
+  period: 60 # How often to scan a URL. In seconds.
+urls:
+  - https://google.com
+  - http://facebook.com
+  # - https://amazon.com
+  # - http://ebay.com
+  # - http://fake.local # This fake domain

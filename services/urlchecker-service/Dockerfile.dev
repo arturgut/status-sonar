@@ -1,0 +1,14 @@
+FROM golang:1.14.2
+
+WORKDIR /go/src/app
+COPY . .
+
+RUN go get -d -v ./...
+RUN go install -v ./...
+
+# Mind the port! dev=8090, final build=8091
+ENV URL_CHECKER_SERVER_PORT=8090 
+
+EXPOSE 8090
+
+CMD ["make","run"]

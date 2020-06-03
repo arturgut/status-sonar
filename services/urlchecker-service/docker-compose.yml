@@ -1,0 +1,17 @@
+# Use this compose to create dev environment 
+version: '3'
+services: 
+  urlchecker-dev: 
+    container_name: urlchecker-dev
+    image: urlchecker-dev:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8090:8090"
+    volumes: 
+      - "$PWD/.:/go/src/app"
+    networks: 
+      - net
+networks:
+  net: 
