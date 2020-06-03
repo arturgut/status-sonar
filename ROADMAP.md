@@ -6,7 +6,8 @@
 - [x] UI - Add routing 
 - [x] UI - Add Service HTTP Client connection to API  
 - [x] UI - Add *ngFor to list URL's from API 
-- [ ] UI - Add ngx-charts suppport with real time display fetched from api 
+- [x] UI - Add ngx-charts suppport with real time display fetched from api 
+- [x] API - Add timestamp to /list 
 
 # Version 0.2 - 'URL Manage'
 - [ ] API - Create account microservice with MongoDB as backend
@@ -14,7 +15,6 @@
 - [ ] API - Add api/manage/add endpoint
 - [ ] API - Add api/manage/remove endpoint
 - [ ] UI - Add 'URL Manage' page ( single account)
-- [ ] 
 
 # Version 0.3 - 'User Accounts '
 - [ ] UI - Add account admin page 

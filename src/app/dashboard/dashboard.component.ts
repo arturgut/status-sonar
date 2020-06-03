@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiResponseService } from '../api-response.service';
 import { NgxChartComponent } from '../ngx-chart/ngx-chart.component';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,18 +11,19 @@ import { NgxChartComponent } from '../ngx-chart/ngx-chart.component';
 export class DashboardComponent implements OnInit {
 
   public responseArray: any;
- 
+  // public responseArrayProcess: any;
+  // public responseArrayNgxFormat = [];
+
   constructor(private urlfetchlist: ApiResponseService) {
-    this.fetchUrls()
+    this.fetchUrls();
   }
 
   onClick(){
-    this.fetchUrls()
+    this.fetchUrls();
   }
 
   fetchUrls(){
     this.urlfetchlist.getList().subscribe((response) => {
-      console.log(response);
       this.responseArray = response;
     });
   }

@@ -1,9 +1,7 @@
-import { Component, NgModule  } from '@angular/core';
+import { Component, NgModule, Input  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { multi } from './data';
-
-
+import { ApiResponseService } from '../api-response.service';
 
 @Component({
   selector: 'app-ngx-chart',
@@ -12,38 +10,51 @@ import { multi } from './data';
 })
 export class NgxChartComponent {
 
-  multi: any[];
+  public responseArrayProcess: any = [];
+  public responseArrayTemp: any = [];
+  public responseArrayNgxFormat: any = [];
+  public tempArray: any = [];
+  
   view: any[] = [1000, 300];
 
   // options
-  legend: boolean = true;
+  legend: boolean = false;
   showLabels: boolean = true;
   animations: boolean = true;
-  xAxis: boolean = false;
+  xAxis: boolean = true;
   yAxis: boolean = true;
   showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Time';
-  yAxisLabel: string = 'Duration in Ms';
+  xAxisLabel: string = 'Duration in Ms';
+  yAxisLabel: string = 'URL';
   timeline: boolean = true;
-
+  rangeFillOpacity = 0.15
   colorScheme = 'fire';
   theme = 'dark';
 
-  constructor() {
-    Object.assign(this, { multi });
+  constructor(private urlfetchlist: ApiResponseService) {
+    this.fetchUrls();
   }
 
-  onSelect(data): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  onClick(){
+    this.fetchUrls();
   }
 
-  onActivate(data): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  fetchUrls(){
+    this.urlfetchlist.getList().subscribe((response) => {
+      this.responseArrayProcess = response;
+      this.responseArrayNgxFormat = [];
+      this.responseArrayProcess.forEach(element => {
+        this.responseArrayNgxFormat.push({
+          "name": element.url, "value": element.durationInMs 
+        });
+      });
+      this.responseArrayNgxFormat = [...this.responseArrayNgxFormat];
+    });
   }
 
-  onDeactivate(data): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-  }
+  onSelect(data): void {}
+  onActivate(data): void {}
+  onDeactivate(data): void {}
 
 }

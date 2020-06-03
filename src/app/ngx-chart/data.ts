@@ -58,3 +58,23 @@ export var multi = [
     ]
   }
 ];
+
+export var response = [
+    {
+      "name": "https://google.com",
+      "series": [
+          {
+              "name": "Tue Jun 02 2020 10:05:16 GMT+0100 (British Summer Time)",
+              value: 60
+          },
+          {
+            "name": "Tue Jun 03 2020 10:05:16 GMT+0100 (British Summer Time)",
+            value: 123
+        },
+        {
+          "name": "Tue Jun 04 2020 10:05:16 GMT+0100 (British Summer Time)",
+          value: 240
+        }
+      ]
+  }
+];
