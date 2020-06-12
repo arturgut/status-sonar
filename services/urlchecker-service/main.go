@@ -8,6 +8,7 @@ type ScanResult struct {
 	ResponseCode int       `json:"responseCode"` // also known as HTTP status code
 	DurationInMs int       `json:"durationInMs"` // measured duration in ms
 	Timestamp    time.Time `json:"timestamp"`    // measured duration in ms
+	RefreshRate  int
 }
 
 // var initTimeNow = time.Now()

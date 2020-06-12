@@ -38,3 +38,10 @@ body {
 .footer {
   margin-top: 5em;
 }
+
+.input{
+  border-bottom-width: 1px;
+  border-top-width: 0px;
+  border-bottom-color: aliceblue;
+  border-color: #183045;
+}

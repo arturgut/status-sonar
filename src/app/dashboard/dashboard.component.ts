@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiResponseService } from '../api-response.service';
-import { NgxChartComponent } from '../ngx-chart/ngx-chart.component';
 import { element } from 'protractor';
 
 @Component({
@@ -11,6 +10,7 @@ import { element } from 'protractor';
 export class DashboardComponent implements OnInit {
 
   public responseArray: any;
+  public urlList: any;
   // public responseArrayProcess: any;
   // public responseArrayNgxFormat = [];
 
@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   fetchUrls(){
     this.urlfetchlist.getList().subscribe((response) => {
       this.responseArray = response;
+      
     });
   }
 

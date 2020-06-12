@@ -1,0 +1,126 @@
+
+<div class="container">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Entry</th>
+        <th scope="col">Site settings</th>
+        <th scope="col">Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let item of accountObject | keyvalue">
+        <h3>Account name: {{ accountObject.accounName}}</h3> 
+        <tr *ngFor="let site of item.value | keyvalue" >
+          <td >
+            <h4><span>{{ site.key }} </span></h4>
+          </td>
+          <td >
+              <form (ngSubmit)="onSubmit()" #urlForm="ngForm">
+                URL:
+                <input
+                  type="url"
+                  required 
+                  pattern="(http:\/\/|https:\/\/).+\..+"
+                  name="URL" 
+                  [(ngModel)]="url" 
+                  #urlControl="ngModel"
+                  class="input"
+                  [ngModel]="site.value.url"
+                  class="form-control"
+                />
+                <ng-container *ngIf="urlForm.invalid && urlControl.touched">
+                  <div *ngIf="urlControl.errors.required">
+                    You must enter correct URL format
+                  </div>
+                  <div *ngIf="urlControl.errors.pattern">
+                    Please enter a valid URL 
+                  </div>
+                </ng-container>
+                Refresh Rate:
+                <input
+                  type="number"
+                  required 
+                  pattern=".+[0-9]"
+                  name="RefreshRate" 
+                  [(ngModel)]="refreshRate" 
+                  #urlControl="ngModel"
+                  class="input"
+                  [ngModel]="site.value.refreshRateInSec"
+                  class="form-control"
+                />
+                <ng-container *ngIf="urlForm.invalid && urlControl.touched">
+                  <div *ngIf="urlControl.errors.required">
+                    You must enter correct URL format
+                  </div>
+                  <div *ngIf="urlControl.errors.pattern">
+                    Please enter a valid URL 
+                  </div>
+                </ng-container>
+                <button [disabled]="urlForm.invalid" class="btn btn-primary btn-sm" >
+                  Save
+                </button>
+            </form>
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm"  (click)="onRemove(site.key)"> Remove </button>
+          </td>
+        </tr>
+        
+      </ng-container>
+      Add New Site
+        <tr>
+          <td>
+            <input
+            type="url"
+            required 
+            pattern="(http:\/\/|https:\/\/).+\..+"
+            name="URL" 
+            [(ngModel)]="siteNameNew" 
+            #urlControl="ngModel"
+            class="input"
+            ngModel="http://"
+            value="http://"
+            class="form-control"
+          />
+          </td>
+          <ng-container></ng-container>
+          <td>
+            <input
+              type="url"
+              required 
+              pattern="(http:\/\/|https:\/\/).+\..+"
+              name="URL" 
+              [(ngModel)]="urlNew" 
+              #urlControl="ngModel"
+              class="input"
+              [ngModel]=""
+              class="form-control"
+            />
+          </td>
+          <ng-container></ng-container>
+          <td>
+            <input
+              type="number"
+              required 
+              pattern=".+[0-9]"
+              name="RefreshRate" 
+              [(ngModel)]="refreshRateNew" 
+              #urlControl="ngModel"
+              class="input"
+              [ngModel]=""
+              class="form-control"
+            />
+          </td>
+          <ng-container></ng-container>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm"  (click)="onAdd(siteNameNew, urlNew, refreshRateNew)"> Add </button>
+          </td>
+        </tr>
+    </tbody>    
+  </table> 
+<!-- <div>Is form valid: {{ urlForm.valid }}</div> -->
+<!-- <div>Is form valid: {{ urlForm.value | json}}</div> -->
+  <!-- <button type="button" class="btn btn-primary btn-sm"  (click)="onClick()"> Add New </button> -->
+
+</div>

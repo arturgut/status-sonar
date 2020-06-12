@@ -10,8 +10,9 @@ import { AboutComponent } from './about/about.component';
 import { FooterComponent } from './footer/footer.component';
 import { NgxChartComponent } from './ngx-chart/ngx-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-
+import { FormsModule} from '@angular/forms'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ManageComponent } from './manage/manage.component';
 
 @NgModule({
   declarations: [
@@ -20,14 +21,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NavigationComponent,
     AboutComponent,
     FooterComponent,
-    NgxChartComponent
+    NgxChartComponent,
+    ManageComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    NgxChartsModule
+    NgxChartsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

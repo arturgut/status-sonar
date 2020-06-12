@@ -1,0 +1,10 @@
+loglevel: debug
+server: 
+  port: 8092
+client:
+  host: localhost
+  port: 27017
+  username: root # This is currently broken
+  password: example  # http client timeout
+  userDatabase: users
+  accountDatabase: accounts 

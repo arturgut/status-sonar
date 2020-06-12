@@ -10,18 +10,24 @@
 - [x] API - Add timestamp to /list 
 
 # Version 0.2 - 'URL Manage'
-- [ ] API - Create account microservice with MongoDB as backend
-- [ ] API - Add api/manage/list endpoint
-- [ ] API - Add api/manage/add endpoint
-- [ ] API - Add api/manage/remove endpoint
-- [ ] UI - Add 'URL Manage' page ( single account)
+- [x] API - Move urlchecker source code to sonar-status repo 
+- [x] API - Add MongoDB driver
+- [x] API - Define Account BSON structure
+- [x] API - Add GET api/account/list endpoint
+- [x] API - Add GET api/account/add endpoint
+- [x] API - Add GET api/account/update endpoint
+- [x] UI - Update dashboard to display data from account endpoint 
+- [x] UI - Add 'URL Manage' component 
+- [ ] API - Update urlcheck service to load list of urls from MongoDB
+- [ ] API - Update urlcheck service to save check results to MongoDB
+- [ ] UI + API - Hookup UI MANAGE to API
 
-# Version 0.3 - 'User Accounts '
+# Version 0.3 - 'User Accounts Administration'
 - [ ] UI - Add account admin page 
-- [ ] API - Add api/account/add, 
-- [ ] API - Add api/account/remove, 
-- [ ] API - Add api/account/list, 
-- [ ] API - Add api/account/update
+- [ ] API - Add api/user/add, 
+- [ ] API - Add api/user/remove, 
+- [ ] API - Add api/user/list, 
+- [ ] API - Add api/user/update
 
 # Version 0.4 'User Authentication' 
 - [ ] API - User authentication
@@ -35,6 +41,8 @@
 # Version 0.6 'Enhanced Sonar' 
 - [ ] API - Add metrics database (TSDB or Prometheus) 
 - [ ] API & UI - SSL validation (show for how long the certificate will be valid for) 
-- [ ] 
+- [ ] UI - Status color changes depends on status (red for HTTP 5xx, Orange for HTTP 4xx, Green for HTTP 2xx)
 
 
+# Version 0.6 'Multiregion Status Sonar' 
+- [ ] API - Add support for multiregion checking 
