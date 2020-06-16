@@ -18,7 +18,8 @@
 - [x] API - Add GET api/account/update endpoint
 - [x] UI - Update dashboard to display data from account endpoint 
 - [x] UI - Add 'URL Manage' component 
-- [ ] API - Update urlcheck service to load list of urls from MongoDB
+- [ ] UI - Clean up 'URL Manage' view 
+- [x] API - Update urlcheck service to load list of urls from MongoDB
 - [ ] API - Update urlcheck service to save check results to MongoDB
 - [ ] UI + API - Hookup UI MANAGE to API
 

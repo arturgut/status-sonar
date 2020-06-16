@@ -15,13 +15,22 @@ type Config struct {
 
 	Server struct {
 		Port int `yaml:"port" envconfig:"URL_CHECKER_SERVER_PORT"`
-	} `yaml:"server"`
+	} `yaml:"http_server"`
 
 	Client struct {
 		SkipSSL bool          `yaml:"skipssl"`
 		Timeout time.Duration `yaml:"timeout" envconfig:"URL_CHECKER_TIMEOUT"`
 		Period  time.Duration `yaml:"period" envconfig:"URL_CHECKER_PERIOD"`
-	} `yaml:"client"`
+	} `yaml:"http_client"`
+
+	DbClient struct {
+		Host            string `yaml:"host" envconfig:"ACCOUNT_SERVICE_MONGO_HOST"`
+		Port            int    `yaml:"port" envconfig:"ACCOUNT_SERVICE_MONGO_PORT"`
+		Username        string `yaml:"username" envconfig:"ACCOUNT_SERVICE_MONGO_USERNAME"`
+		Password        string `yaml:"password" envconfig:"ACCOUNT_SERVICE_MONGO_PASSWORD"`
+		userDatabase    string `yaml:"userDatabase" envconfig:"ACCOUNT_SERVICE_MONGO_USER_DATABASE"`
+		accountDatabase string `yaml:"accountDatabase" envconfig:"ACCOUNT_SERVICE_MONGO_ACCOUNT_DATABASE"`
+	} `yaml:"mongo_client"`
 
 	Urls []string
 }

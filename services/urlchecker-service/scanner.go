@@ -8,6 +8,29 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+func scannerRoutine() {
+	log.Info("Starting URL scanner routine")
+
+	// iterate over all accounts and load list of URLs
+
+	for _, elm := range accountData {
+		log.Debug("scannerRoutine(), Loading account data: ", elm.AccountName)
+
+		for _, url := range elm.URLList {
+			log.Debug("scannerRoutine(), Loading url data: ", url.URL)
+			go urlScan(url.URL, c)
+		}
+	}
+
+	for l := range c { // Infinite for loop to continusly scan URL listed in the channel 'c'
+		go func(url string) {
+			time.Sleep(config.Client.Period * time.Second)
+			urlScan(url, c)
+		}(l)
+	}
+
+}
+
 func scannerLoop() {
 
 	log.Info("Starting URL scanner")
@@ -37,12 +60,12 @@ func urlScan(url string, c chan string) { // Main urlScan function
 	elapsed := int(t.Sub(start)) / 1000 / 1000 // Convert to from date.tinme to miliseconds
 	if err != nil {
 		log.Warn("This URL is unreachable from here! ", err)
-		scanResultsMap[url] = ScanResult{url, 404, 0, t} // Set HTTP STATUS CODE TO 404 and elapsed to '0'
-		c <- url                                         // return result of scan the channel
+		scanResultsMap[url] = ScanResult{url, 404, 0, t, 60} // Set HTTP STATUS CODE TO 404 and elapsed to '0'
+		c <- url                                             // return result of scan the channel
 		return
 	}
 
-	scanResultsMap[url] = ScanResult{url, resp.StatusCode, elapsed, t} // Add URL to global 'u' map
+	scanResultsMap[url] = ScanResult{url, resp.StatusCode, elapsed, t, scanResultsMap[url].RefreshRateInSec} // Add URL to global 'u' map
 	log.Debug("Map updated for the following element: ", scanResultsMap[url], "\tCurrent map size: ", len(scanResultsMap))
 
 	c <- url // return result of scan the channel
