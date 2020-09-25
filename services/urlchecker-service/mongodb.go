@@ -14,6 +14,10 @@ import (
 
 func loadAccountsData() {
 
+	log.Debug("len of accountData: ", len(accountData))
+	accountData = nil // flush account data array
+	log.Debug("len of accountData: ", len(accountData))
+
 	findOptions := options.Find()
 	findOptions.SetLimit(1000)
 

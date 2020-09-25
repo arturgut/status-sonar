@@ -6,8 +6,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-// ScanResult structure
-type ScanResult struct {
+// Site structure
+type Site struct {
 	URL              string    `json:"url"`
 	ResponseCode     int       `json:"responseCode"`     // Latest response
 	DurationInMs     int       `json:"durationInMs"`     // Latest duration
@@ -18,7 +18,7 @@ type ScanResult struct {
 // Account structure
 type Account struct {
 	AccountName string                `json:"accounName"`
-	URLList     map[string]ScanResult `json:"URLList"`
+	URLList     map[string]Site `json:"URLList"`
 }
 
 var account = new(Account)

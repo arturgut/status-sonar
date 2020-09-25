@@ -59,7 +59,7 @@ func updateAccountHandler(w http.ResponseWriter, r *http.Request) {
 func addAccountHandler(w http.ResponseWriter, r *http.Request) {
 
 	var a Account
-	a.URLList = make(map[string]ScanResult)
+	a.URLList = make(map[string]Site)
 	t := time.Now()
 	log.Debug("addAccountHandler(): ")
 	enableCors(&w) // enable Cors support
@@ -74,7 +74,7 @@ func addAccountHandler(w http.ResponseWriter, r *http.Request) {
 			log.Debug("addAccountHandler(): GET request Key ", k)
 			log.Debug("addAccountHandler(): GET request Value:", v[0])
 			a.AccountName = string(v[0])
-			a.URLList["google.com"] = ScanResult{"http://google.com", 200, 123, t, 60} // Add default scan result entry
+			a.URLList["google.com"] = Site{"http://google.com", 200, 123, t, 60} // Add default scan result entry
 			dbAddAccount(a)
 			defer r.Body.Close()
 			w.WriteHeader(http.StatusOK)
@@ -114,11 +114,11 @@ func listAccountURLsHandler(w http.ResponseWriter, r *http.Request) {
 			if a.AccountName != "" {
 				log.Debug("a.AccountName not empty: ", a.AccountName)
 				m := a.URLList
-				var sliceOfScanResult []ScanResult
+				var sliceOfSite []Site
 				for _, value := range m { // Convert Map of structs to slice
-					sliceOfScanResult = append(sliceOfScanResult, value)
+					sliceOfSite = append(sliceOfSite, value)
 				}
-				d, err := json.MarshalIndent(sliceOfScanResult, "", "   ")
+				d, err := json.MarshalIndent(sliceOfSite, "", "   ")
 				if err != nil {
 					fmt.Println("Error during marshalling")
 				}

@@ -20,6 +20,14 @@ export class DashboardComponent implements OnInit {
 
   onClick(){
     this.fetchUrls();
+    this.reloadConfig();
+  }
+
+  reloadConfig() {
+    this.urlfetchlist.reloadConfig().subscribe((response) => {
+      this.responseArray = response;
+      
+    });
   }
 
   fetchUrls(){

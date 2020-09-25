@@ -4,10 +4,10 @@ import (
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
-) // ScanResult ...
+) // Site ...
 
-// ScanResult structure
-type ScanResult struct {
+// Site structure
+type Site struct {
 	URL              string    `json:"url"`
 	ResponseCode     int       `json:"responseCode"`     // Latest response
 	DurationInMs     int       `json:"durationInMs"`     // Latest duration
@@ -17,16 +17,18 @@ type ScanResult struct {
 
 // Account structure
 type Account struct {
-	AccountName string                `json:"accounName"`
-	URLList     map[string]ScanResult `json:"URLList"`
+	AccountName string          `json:"accounName"`
+	URLList     map[string]Site `json:"URLList"`
 }
 
-var account = new(Account)
+// var account = new(Account)
 var collection *mongo.Collection
 
-var accountData []*Account // Global account data arrray
+// Global account data arrray. To be used with admin functionality
+var accountData []*Account
 
-var scanResultsMap = make(map[string]ScanResult)
+// SitesMap Global site scan result map
+var SitesMap = make(map[string]Site)
 
 var c = make(chan string) // Initiate go routine channel. This needs to be globally accessible
 
@@ -36,7 +38,6 @@ func main() {
 	printVersion()                   // Print version
 	loadConfiguration("config.yaml") // load configuration
 	readEnv(&config)                 // Read environment attributes
-	loadAccountsData()               // Load acccounts data
-	go scannerRoutine()              // Start URL scanner routines
-	startServer()                    // Start HTTP server
+	go scanScheduler()
+	startServer() // Start HTTP server
 }

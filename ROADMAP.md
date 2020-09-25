@@ -17,10 +17,11 @@
 - [x] API - Add GET api/account/add endpoint
 - [x] API - Add GET api/account/update endpoint
 - [x] UI - Update dashboard to display data from account endpoint 
-- [x] UI - Add 'URL Manage' component 
-- [ ] UI - Clean up 'URL Manage' view 
+- [x] UI - Add 'URL Manage' component
 - [x] API - Update urlcheck service to load list of urls from MongoDB
-- [ ] API - Update urlcheck service to save check results to MongoDB
+- [x] API - URLService - Add reload configuration endpoint
+- [x] API - URLService - Reload configuration every 30s
+- [ ] UI - Clean up 'URL Manage' view 
 - [ ] UI + API - Hookup UI MANAGE to API
 
 # Version 0.3 - 'User Accounts Administration'
@@ -40,10 +41,10 @@
 - [ ] Create Kubernetes Deployment   
 
 # Version 0.6 'Enhanced Sonar' 
+- [ ] Update API services to export internal metrics in prometheus format
 - [ ] API - Add metrics database (TSDB or Prometheus) 
 - [ ] API & UI - SSL validation (show for how long the certificate will be valid for) 
 - [ ] UI - Status color changes depends on status (red for HTTP 5xx, Orange for HTTP 4xx, Green for HTTP 2xx)
-
 
 # Version 0.6 'Multiregion Status Sonar' 
 - [ ] API - Add support for multiregion checking 

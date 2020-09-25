@@ -41,9 +41,11 @@ export class ApiResponseService {
   }
 
   public updateAccount(account: Account ) {
-
     return this.http.post<URL>('http://localhost:8092/api/account/update', account )
+  }
 
+  public reloadConfig(){
+    return this.http.get<URL>('http://localhost:8091/api/reload-config')
   }
 
 }

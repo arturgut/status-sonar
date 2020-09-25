@@ -4,7 +4,7 @@ http_server:
 http_client: 
   skipSSL: true # This is currently broken
   timeout: 30 # http client timeout
-  period: 60 # How often to scan a URL. In seconds.
+  period: 10 # How often to scan a URL. In seconds.
 mongo_client:
   host: localhost
   port: 27017

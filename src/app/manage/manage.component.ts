@@ -26,6 +26,7 @@ export class ManageComponent implements OnInit {
   onSubmit(){
     console.log("AccountObject: ", this.accountObject)
     this.updateAccount();
+    this.reloadConfig();
   }
 
   onClick(){
@@ -62,8 +63,13 @@ export class ManageComponent implements OnInit {
   updateAccount(){
     this.urlHandler.updateAccount(this.accountObject).subscribe((response) => {
       console.log("Reponse from API: ",response)
+    }); 
+  }
+
+  reloadConfig() {
+    this.urlHandler.reloadConfig().subscribe((response) => {
+      console.log("Config reload requested.")
     });
-    
   }
 
   ngOnInit(): void {

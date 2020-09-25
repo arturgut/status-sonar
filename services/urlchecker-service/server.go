@@ -10,10 +10,32 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+func reloadConfig(w http.ResponseWriter, r *http.Request) {
+	log.Debug("In reload config")
+	if r.URL.Path != "/api/reload-config" {
+		http.NotFound(w, r)
+		return
+	}
+
+	switch r.Method {
+
+	case "GET":
+		enableCors(&w)
+		log.Debug("Reload data")
+		loadAccountsData()
+		w.Write([]byte("Configuration has been reloaded"))
+		w.WriteHeader(http.StatusOK)
+	default:
+		w.WriteHeader(http.StatusNotImplemented)
+		w.Write([]byte(http.StatusText(http.StatusNotImplemented)))
+	}
+
+}
+
 func metrics(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "# HELP Version: 0.1 Alpha - https://github.com/arturgut/urlchecker\n")
 	fmt.Fprintf(w, "# HELP url_checker. Label: HTTP Response code. Value: Request duration in Ms\n")
-	for key, value := range scanResultsMap {
+	for key, value := range SitesMap {
 		// Prometheus format: <metric name>{<label name>=<label value>, ...}
 		fmt.Fprintf(w, "url_checker{ url='%v', http_status_code=%v } %v\n", key, value.ResponseCode, value.DurationInMs)
 	}
@@ -27,7 +49,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	w.Write([]byte(mapToJSON()))
+	w.Write([]byte(mapToJSONv2()))
 }
 
 func enableCors(w *http.ResponseWriter) {
@@ -49,8 +71,8 @@ func remove(w http.ResponseWriter, r *http.Request) {
 			log.Debug("remove(): Received a GET request", k, v)
 
 			// Remove URL new url here
-			delete(scanResultsMap, k)
-			log.Info("remove(): Removed item ", scanResultsMap, "from map.\tCurrent map items: ", len(scanResultsMap))
+			delete(SitesMap, k)
+			log.Info("remove(): Removed item ", SitesMap, "from map.\tCurrent map items: ", len(SitesMap))
 			w.Write([]byte("Item has been removed!"))
 			w.Write([]byte(mapToJSON()))
 		}
@@ -75,9 +97,9 @@ func add(w http.ResponseWriter, r *http.Request) {
 			log.Debug("Received a GET request", k, v)
 			url, err := url.Parse(k) // URL Parse
 
-			if val, ok := scanResultsMap[k]; ok { // Check if
+			if val, ok := SitesMap[k]; ok { // Check if
 				//do something here
-				log.Info("URL already known. Skipping. URL: ", scanResultsMap[k], val)
+				log.Info("URL already known. Skipping. URL: ", SitesMap[k], val)
 				w.Write([]byte("URL already known. Skipping"))
 				return
 			}
@@ -91,7 +113,7 @@ func add(w http.ResponseWriter, r *http.Request) {
 				w.Write([]byte("Site has ben successfully added to the list of URL's\n"))
 				w.Write([]byte(mapToJSON()))
 				log.Info(k, "URL has ben successfully added to the list of URL's\n")
-				log.Debug("Elements in map:", len(scanResultsMap))
+				log.Debug("Elements in map:", len(SitesMap))
 			} else {
 				w.Write([]byte(url.Scheme + " is not at valid scheme. Expecting http or https!"))
 				log.Error("URL has no valid scheme. Expecting http or https!")
@@ -111,6 +133,7 @@ func startServer() {
 	http.HandleFunc("/api/add", add)
 	http.HandleFunc("/api/remove", remove)
 	http.HandleFunc("/api/list", list)
+	http.HandleFunc("/api/reload-config", reloadConfig)
 
 	serverPort := ":" + strconv.FormatInt(int64(config.Server.Port), 10) // Format server port to be type string
 	http.ListenAndServe(serverPort, nil)                                 // Start server
@@ -118,15 +141,28 @@ func startServer() {
 
 func mapToJSON() []byte {
 
-	var sliceOfScanResult []ScanResult
-	for _, value := range scanResultsMap { // Convert Map of structs to slice
-		sliceOfScanResult = append(sliceOfScanResult, value)
+	var sliceOfSite []Site
+	for _, value := range SitesMap { // Convert Map of structs to slice
+		sliceOfSite = append(sliceOfSite, value)
 	}
 
-	data, err := json.MarshalIndent(sliceOfScanResult, "", "   ") // Print JSON
+	data, err := json.MarshalIndent(sliceOfSite, "", "   ") // Print JSON
 	if err != nil {
 		fmt.Println("Error during marshalling")
 	}
 	fmt.Printf("%s\n", data)
 	return data
+}
+
+func mapToJSONv2() []byte {
+
+	for _, elm := range accountData { // iterate over all accounts and load list of URLs
+		log.Debug("scannerRoutine(), Loading account data: ", elm.AccountName)
+		for _, url := range elm.URLList {
+			log.Debug("scannerRoutine(), Loading url data: ", url.URL)
+			go urlScan(url.URL, c)
+		}
+	}
+
+	return nil
 }
