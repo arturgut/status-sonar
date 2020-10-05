@@ -49,7 +49,8 @@ func list(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	w.Write([]byte(mapToJSONv2()))
+	// w.Write([]byte(mapToJSONv2()))
+	w.Write([]byte(mapToJSON()))
 }
 
 func enableCors(w *http.ResponseWriter) {

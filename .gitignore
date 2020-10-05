@@ -47,3 +47,10 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Terraform
+.terraform/*
+*.tfstate
+terraform-gke/account.json
+terraform-gke/kubeconfig
+terraform-gke/.terraform
