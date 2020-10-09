@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 
 	log "github.com/sirupsen/logrus"
@@ -35,6 +36,13 @@ func reloadConfig(w http.ResponseWriter, r *http.Request) {
 func metrics(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "# HELP Version: 0.1 Alpha - https://github.com/arturgut/urlchecker\n")
 	fmt.Fprintf(w, "# HELP url_checker. Label: HTTP Response code. Value: Request duration in Ms\n")
+	name, err := os.Hostname()
+	if err != nil {
+		panic(err)
+	}
+	log.Debug("Hostname:", name)
+	fmt.Fprintf(w, "# Hostname: %v \n", name)
+
 	for key, value := range SitesMap {
 		// Prometheus format: <metric name>{<label name>=<label value>, ...}
 		fmt.Fprintf(w, "url_checker{ url='%v', http_status_code=%v } %v\n", key, value.ResponseCode, value.DurationInMs)

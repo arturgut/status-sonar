@@ -1,3 +1,4 @@
+
 all: build run 
 
 # Local build
@@ -21,6 +22,7 @@ test:
 
 # Docker dev build and test
 docker-build-dev:
+	export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
 	docker build -t mrsouliner/urlchecker-dev:latest -t mrsouliner/urlchecker-dev:$(GIT_COMMIT_SHA)  -f Dockerfile.dev .
 
 docker-run-dev:
@@ -34,9 +36,18 @@ docker-compile:
 	docker run --env GOOS=linux --env GOARCH=amd64 --rm --name urlchecker urlchecker-dev:latest go build -o bin/urlchecker-linux-amd64
 
 docker-build-final:
-	docker build -t mrsouliner/urlchecker:latest -t mrsouliner/urlchecker:$(GIT_COMMIT_SHA) . 
+	export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
+	docker build -t mrsouliner/urlchecker:latest -t mrsouliner/urlchecker:$(GIT_COMMIT_SHA) -f Dockerfile .
+	# docker build -t mrsouliner/urlchecker:latest -t mrsouliner/urlchecker:$(GIT_COMMIT_SHA)  -f Dockerfile.dev . 
 
-docker-push-dev: 
+docker-push-dev:
+	export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h') 
 	docker login -u="$(DOCKER_USER)" -p="$(DOCKER_PASS)"
 	docker push mrsouliner/urlchecker-dev:latest
 	docker push mrsouliner/urlchecker-dev:$(GIT_COMMIT_SHA)
+
+docker-push:
+	export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
+	docker login -u="$(DOCKER_USER)" -p="$(DOCKER_PASS)"
+	docker push mrsouliner/urlchecker:latest
+	docker push mrsouliner/urlchecker:$(GIT_COMMIT_SHA)
