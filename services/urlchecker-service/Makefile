@@ -1,7 +1,7 @@
+### LOCAL BUILD ### 
 
 all: build run 
 
-# Local build
 build:
 	/usr/local/go/bin/go get -d -v ./...
 	/usr/local/go/bin/go build -o bin/urlchecker *.go
@@ -20,25 +20,20 @@ clean:
 test:
 	go test
 
+### DOCKER ### 
+
 # Docker dev build and test
 docker-build-dev:
 	export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
 	docker build -t mrsouliner/urlchecker-dev:latest -t mrsouliner/urlchecker-dev:$(GIT_COMMIT_SHA)  -f Dockerfile.dev .
 
-docker-run-dev:
-	docker run urlchecker-dev:latest -d 
-
-docker-run-test:
-	docker run --rm --name urlchecker urlchecker-dev:latest go test
-
 # Final build
 docker-compile:
-	docker run --env GOOS=linux --env GOARCH=amd64 --rm --name urlchecker urlchecker-dev:latest go build -o bin/urlchecker-linux-amd64
+	docker run --env GOOS=linux --env GOARCH=amd64 --rm -v $PWD/bin:/go/src/app/bin mrsouliner/urlchecker-dev:latest go build -o ./bin/urlchecker-linux-amd64
 
 docker-build:
 	export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
 	docker build -t mrsouliner/urlchecker:latest -t mrsouliner/urlchecker:$(GIT_COMMIT_SHA) -f Dockerfile .
-	# docker build -t mrsouliner/urlchecker:latest -t mrsouliner/urlchecker:$(GIT_COMMIT_SHA)  -f Dockerfile.dev . 
 
 docker-push-dev:
 	export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h') 

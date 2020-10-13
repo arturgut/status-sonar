@@ -1,14 +1,20 @@
 FROM golang:1.14.2
 
+# Set working directory 
 WORKDIR /go/src/app
+
 COPY . .
+
+VOLUME [ "$PWD/bin" ]
 
 RUN go get -d -v ./...
 RUN go install -v ./...
+RUN go build -o ./bin/urlchecker-linux-amd64
 
 # Mind the port! dev=8090, final build=8091
 ENV URL_CHECKER_SERVER_PORT=8091 
 
 EXPOSE 8091
 
-CMD ["make","run"]
+
+CMD ["./bin/urlchecker-linux-amd64"]

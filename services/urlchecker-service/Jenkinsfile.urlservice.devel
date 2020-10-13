@@ -1,0 +1,46 @@
+pipeline{
+
+  agent any
+  
+  environment {
+    GIT_COMMIT_SHA = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+    DOCKER_USER = credentials('docker-hub-user')
+    DOCKER_PASS = credentials('docker-hub-pass')
+  }
+ 
+  stages{
+    
+    stage('Build URL Service Docker Develpoment Image') {
+      steps {
+        echo 'Building...'
+        sh '''
+          export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
+          make docker-build-dev
+        '''
+      }
+    }
+
+    stage('Test') {
+      steps {
+        echo 'Testing...'
+        sh ''' make docker-run-test '''
+      }
+    }
+
+    stage('Push URL Service Docker Develpoment Image') {
+      steps {
+        echo 'Push Dev version of container to Docker Hub'
+        sh '''
+        export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
+        make docker-push-dev
+        '''
+      }
+    }
+  }
+  post {
+        failure {
+            echo 'Push Dev version of container to Docker Hub'
+            sh 'printenv'
+        }
+    }
+}

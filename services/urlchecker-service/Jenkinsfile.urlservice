@@ -10,11 +10,12 @@ pipeline{
  
   stages{
     
-    stage('Build Dev') {
+    stage('Build URL Service Docker Image') {
       steps {
         echo 'Building...'
         sh '''
-          make docker-build 
+          export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
+          make docker-build
         '''
       }
     }
@@ -26,10 +27,14 @@ pipeline{
       }
     }
 
-    stage('Docker Push Dev') {
+    stage('Push URL Service Docker Develpoment Image') {
       steps {
+        
         echo 'Push Dev version of container to Docker Hub'
-        sh ''' make docker-push '''
+        sh ''' 
+        export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
+        make docker-push 
+        '''
       }
     }
   }
