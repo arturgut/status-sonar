@@ -25,7 +25,7 @@ test:
 # Docker dev build and test
 docker-build-dev:
 	export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
-	docker build -t mrsouliner/urlchecker-dev:latest -t mrsouliner/urlchecker-dev:$(GIT_COMMIT_SHA)  -f Dockerfile.dev .
+	cd services/urlchecker-service/; docker build -t mrsouliner/urlchecker-dev:latest -t mrsouliner/urlchecker-dev:$(GIT_COMMIT_SHA) -f Dockerfile.dev .
 
 # Final build
 docker-compile:
