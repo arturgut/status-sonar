@@ -1,15 +1,15 @@
 pipeline{
 
   agent any
-  
+
   environment {
     GIT_COMMIT_SHA = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
     DOCKER_USER = credentials('docker-hub-user')
     DOCKER_PASS = credentials('docker-hub-pass')
   }
- 
+
   stages{
-    
+
     stage('Build URL Service Docker Develpoment Image') {
       steps {
         echo 'Building...'
