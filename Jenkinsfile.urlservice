@@ -10,6 +10,16 @@ pipeline{
  
   stages{
     
+    stage('Compile Binary') {
+      steps {
+        echo 'Compiling urlservice binary...'
+        sh '''
+          export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
+          make docker-compile
+        '''
+      }
+    }
+
     stage('Build URL Service Docker Image') {
       steps {
         echo 'Building...'
@@ -19,6 +29,7 @@ pipeline{
         '''
       }
     }
+    
     
     stage('Push URL Service Docker Develpoment Image') {
       steps {
@@ -31,7 +42,7 @@ pipeline{
       }
     }
   }
-  
+
   post {
         failure {
             echo 'Push Dev version of container to Docker Hub'
