@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata: 
+  name: urlservice-deployment
+spec: 
+  replicas: 2
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers:
+        - name: urlservice 
+          image: mrsouliner/urlchecker-test:test2
+          ports:
+            - containerPort: 8091

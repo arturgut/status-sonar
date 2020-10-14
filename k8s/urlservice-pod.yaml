@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: urlservice-pod
+  labels:
+    component: web
+spec:
+  containers:
+    - name: urlservice
+      image: mrsouliner/urlchecker-dev
+      ports:
+        - containerPort: 8091
