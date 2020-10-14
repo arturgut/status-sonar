@@ -19,14 +19,7 @@ pipeline{
         '''
       }
     }
-
-    stage('Test') {
-      steps {
-        echo 'Testing...'
-        sh ''' make docker-run-test '''
-      }
-    }
-
+    
     stage('Push URL Service Docker Develpoment Image') {
       steps {
         
@@ -38,6 +31,7 @@ pipeline{
       }
     }
   }
+  
   post {
         failure {
             echo 'Push Dev version of container to Docker Hub'
