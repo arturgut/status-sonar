@@ -29,8 +29,7 @@ docker-build-dev:
 
 # Final build
 docker-compile:
-	docker run --env GOOS=linux --env GOARCH=amd64 --rm -v $PWD/bin:/go/src/app/bin mrsouliner/urlchecker-dev:latest go build -o ./bin/urlchecker-linux-amd64
-
+	cd services/urlchecker-service/; docker run --env GOOS=linux --env GOARCH=amd64 --rm -v $(PWD)/bin:/go/src/app/bin mrsouliner/urlchecker-dev:latest go build -o ./bin/urlchecker-linux-amd64
 docker-build:
 	export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
 	cd services/urlchecker-service/; docker build -t mrsouliner/urlchecker:latest -t mrsouliner/urlchecker:$(GIT_COMMIT_SHA) -f Dockerfile .
