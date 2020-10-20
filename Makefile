@@ -25,15 +25,15 @@ test:
 # Docker dev build and test
 docker-build-dev:
 	export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
-	cd services/urlchecker-service/ && docker build -t mrsouliner/urlchecker-dev:latest -t mrsouliner/urlchecker-dev:${GIT_COMMIT_SHA} -f Dockerfile.dev .
+	docker build -t mrsouliner/urlchecker-dev:latest -t mrsouliner/urlchecker-dev:${GIT_COMMIT_SHA} -f ./services/urlchecker-service/Dockerfile.dev .
 
 # Final build
 docker-compile:
-	cd services/urlchecker-service/ && docker run --env GOOS=linux --env GOARCH=amd64 --rm -v ${DOCKER_HOST_JENKINS_PATH}/tmp:/go/src/app/bin mrsouliner/urlchecker-dev:latest go build -o ./bin/urlchecker-linux-amd64
+	docker run --env GOOS=linux --env GOARCH=amd64 --rm -v ${DOCKER_HOST_JENKINS_PATH}/tmp:/go/src/app/bin mrsouliner/urlchecker-dev:latest go build -o ./bin/urlchecker-linux-amd64
 
 docker-build:
 	export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
-	cd services/urlchecker-service/ && docker build -t mrsouliner/urlchecker:latest -t mrsouliner/urlchecker:${GIT_COMMIT_SHA} -f Dockerfile .
+	docker build -t mrsouliner/urlchecker:latest -t mrsouliner/urlchecker:${GIT_COMMIT_SHA} -f .services/urlchecker-service/Dockerfile .
 
 docker-push-dev:
 	export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h') 
