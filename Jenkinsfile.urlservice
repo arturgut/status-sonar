@@ -1,20 +1,20 @@
 pipeline{
 
   agent any
-  
+
   environment {
     GIT_COMMIT_SHA = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+    DOCKER_HOST_JENKINS_PATH="/Users/artur/Projects/jenkins-data/jenkins_home"
     DOCKER_USER = credentials('docker-hub-user')
     DOCKER_PASS = credentials('docker-hub-pass')
   }
- 
+
   stages{
-    
+
     stage('Compile Binary') {
       steps {
         echo 'Compiling urlservice binary...'
         sh '''
-          export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
           make docker-compile
         '''
       }
@@ -24,20 +24,16 @@ pipeline{
       steps {
         echo 'Building...'
         sh '''
-          export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
           make docker-build
         '''
       }
     }
-    
-    
+
     stage('Push URL Service Docker Develpoment Image') {
       steps {
-        
         echo 'Push Dev version of container to Docker Hub'
-        sh ''' 
-        export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
-        make docker-push 
+        sh '''
+        make docker-push
         '''
       }
     }
