@@ -33,7 +33,7 @@ docker-compile:
 
 docker-build:
 	export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h')
-	docker build -t mrsouliner/urlchecker:latest -t mrsouliner/urlchecker:${GIT_COMMIT_SHA} -f .services/urlchecker-service/Dockerfile .
+	docker build -t mrsouliner/urlchecker:latest -t mrsouliner/urlchecker:${GIT_COMMIT_SHA} -f ./services/urlchecker-service/Dockerfile .
 
 docker-push-dev:
 	export GIT_COMMIT_SHA=$(git log -n 1 --pretty=format:'%h') 
