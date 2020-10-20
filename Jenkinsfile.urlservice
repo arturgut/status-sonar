@@ -4,7 +4,7 @@ pipeline{
 
   environment {
     GIT_COMMIT_SHA = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
-    DOCKER_HOST_JENKINS_PATH="/Users/artur/Projects/jenkins-data/jenkins_home"
+    DOCKER_HOST_JENKINS_PATH = '/Users/artur/Projects/jenkins-data/jenkins_home/workspace/status-sonar-urlchecker-image'
     DOCKER_USER = credentials('docker-hub-user')
     DOCKER_PASS = credentials('docker-hub-pass')
   }
