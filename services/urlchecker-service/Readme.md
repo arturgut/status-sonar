@@ -114,30 +114,6 @@ yaml:"period" -------> envconfig:"URL_CHECKER_PERIOD"
 
 ---
 
-### Roadmap
-
-> ##### 0.1 - Initial release
-
-* *[DONE]* - use Go routines to periodically check URL
-* *[DONE]* - Add http.client timeout 
-* *[DONE]* - Add dedicated log library
-* *[DONE]* - Add support for environment variables for port, log level, period
-* *[DONE]* - add /check endpoint to allow dynamically check URL. Eg. /check?url=http:\/\/google.com
-* *[DONE]* - allow dynmically manipulate list of URL's with API. Eg. /api/add/{url} /api/remove/{url}
-* *[DONE]* - HTTP response should be in JSON 
-* *[DONE]* - add /api/list endpoint
-
-> ##### 0.2 - CI/CD 
-
-* *[TODO]* - add Dockerfile, push image to registry with commit SHA
-* *[DONE]* - add Makefile
-* *[TODO]* - add Jenkinsfile
-* *[TODO]* - add tests - https://github.com/stretchr/testify
-
-> ##### 0.3 - Status Sonar prep work
-* *[DONE]* - Output as JSON array 
-* *[DONE]* - Add support for CORS
-
 
 
 
